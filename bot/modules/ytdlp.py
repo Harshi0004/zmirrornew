@@ -223,9 +223,13 @@ class YtDlp(TaskListener):
             )
             return
 
+        # Updated options with cookie handling
         options = {
             "usenetrc": True,
-            "cookiefile": "cookies.txt"
+            "cookiefile": "cookies.txt",  # Ensure the path is correct
+            "http_headers": {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:92.0) Gecko/20100101 Firefox/92.0",
+            },
         }
         if opt:
             yt_opts = opt.split("|")
@@ -335,7 +339,7 @@ async def ytdl(client, message):
     YtDlp(
         client,
         message
-    ).newEvent() # type: ignore
+    ).newEvent()  # type: ignore
 
 
 async def ytdlleech(client, message):
@@ -343,10 +347,10 @@ async def ytdlleech(client, message):
         client,
         message,
         isLeech=True
-    ).newEvent() # type: ignore
+    ).newEvent()  # type: ignore
 
 
-bot.add_handler( # type: ignore
+bot.add_handler(  # type: ignore
     MessageHandler(
         ytdl,
         filters=command(
@@ -355,7 +359,7 @@ bot.add_handler( # type: ignore
     )
 )
 
-bot.add_handler( # type: ignore
+bot.add_handler(  # type: ignore
     MessageHandler(
         ytdlleech,
         filters=command(
